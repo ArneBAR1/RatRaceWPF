@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Reference Include="RatRaceLibary">
-      <HintPath>bin\Debug\net5.0-windows\ref\RatRaceLibary.dll</HintPath>
+      <HintPath>bin\Debug\net5.0-windows\RatRaceLibary.dll</HintPath>
     </Reference>
   </ItemGroup>
 

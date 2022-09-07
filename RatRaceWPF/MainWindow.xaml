@@ -25,11 +25,14 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
             </Grid>
         </Border>
 
-        <Button Content="START!" HorizontalAlignment="Left" Margin="950,873,0,0" VerticalAlignment="Top" Height="104" Width="324" FontSize="24" FontWeight="Bold">
+        <Button Content="START!" HorizontalAlignment="Left" Margin="950,873,0,0" VerticalAlignment="Top" Height="104" Width="324" FontSize="24" FontWeight="Bold" Click="Button_Click_1">
             <Button.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#4b355a"/>
@@ -46,11 +49,11 @@
                 <StackPanel  Background="#4b355a" Height="45" VerticalAlignment="Top">
                     <Label Content="Next Race" Foreground="#f4dbd1" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
                 </StackPanel>
-                <ListView VerticalAlignment="Bottom" Height="72" Width="561" Margin="0,0,0,12.5">
+                <ListView Name="NextRaceTable" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Height="72" Width="561" Margin="0,0,0,12.5">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Race Number" Width="187" DisplayMemberBinding="{Binding RaceNumber}" />
-                            <GridViewColumn Header="Track" Width="187" DisplayMemberBinding="{Binding Track}" />
+                            <GridViewColumn Header="Track" Width="187" DisplayMemberBinding="{Binding Tracki}" />
                             <GridViewColumn Header="Rats" Width="187" DisplayMemberBinding="{Binding Rats}" />
                         </GridView>
                     </ListView.View>
@@ -70,7 +73,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Label Content="Runners" Grid.Column="0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" />
-                    <ListView Name="RunnersTable" Grid.Column="0" Height="180" Width="378.28201769911504" Margin="19,68,18,131">
+                    <ListView Name="RunnersTable" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="0" Height="180" Width="378.28201769911504" Margin="19,68,18,131">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Name" Width="189" DisplayMemberBinding="{Binding Name}" />
@@ -78,11 +81,11 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ComboBox Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="180" Height="32" Margin="18,0,0,82" />
-                    <TextBox Text="Amount" Width="180" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="32" Margin="0,0,18,82"/>
+                    <ComboBox Name="SelectRat" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="180" Height="32" Margin="18,0,0,82" />
+                    <TextBox GotFocus="BetAmount_GotFocus" Name="BetAmount" Text="Amount" Width="180" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="32" Margin="0,0,18,82"/>
 
                     <Label Content="Items" Grid.Column="1" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" />
-                    <ListView Grid.Column="1" Height="180" Width="378.28201769911504" Margin="18,68,19,131">
+                    <ListView Name="ItemsTable" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="1" Height="180" Width="378.28201769911504" Margin="18,68,19,131">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Name" Width="126" DisplayMemberBinding="{Binding ItemName}" />
@@ -91,10 +94,10 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <ComboBox Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="180" Height="32" Margin="0,0,18,82"/>
+                    <ComboBox Name="SelectItem" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="180" Height="32" Margin="0,0,18,82"/>
                 </Grid>
 
-                <Button Content="Submit Bet" VerticalAlignment="Top" Height="42" Width="142" FontSize="16" FontWeight="Bold" Margin="344,362,345,0">
+                <Button Name="SubmitButton" IsEnabled="False" Content="Submit Bet" VerticalAlignment="Top" Height="42" Width="142" FontSize="16" FontWeight="Bold" Margin="344,362,345,0" Click="SubmitButton_Click">
                     <Button.Resources>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="#645175"/>
@@ -116,12 +119,12 @@
                     <Label Content="Placed Bets" Foreground="#f4dbd1" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
                 </StackPanel>
                 <Grid Height="205" VerticalAlignment="Bottom">
-                    <ListView>
+                    <ListView Name="PlacedBetsTable" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Player" Width="160" DisplayMemberBinding="{Binding Player}" />
-                                <GridViewColumn Header="Rat Name" Width="160" DisplayMemberBinding="{Binding RatName}" />
-                                <GridViewColumn Header="Amount" Width="160" DisplayMemberBinding="{Binding Amount}" />
+                                <GridViewColumn Header="Player" Width="160" DisplayMemberBinding="{Binding WPlayer}" />
+                                <GridViewColumn Header="Rat Name" Width="160" DisplayMemberBinding="{Binding WRatName}" />
+                                <GridViewColumn Header="Amount" Width="160" DisplayMemberBinding="{Binding WAmount}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -139,7 +142,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Your name:" FontWeight="Bold"  FontSize="16"/>
-                    <TextBox Grid.Column="0" Name="textbox_playername" Text="Name Here" HorizontalAlignment="Center"  VerticalAlignment="Bottom" BorderBrush="#FF4B365a" FontSize="16" Padding="20,10,20,10" Margin="0,0,0,15" />
+                    <TextBox GotFocus="textbox_playername_GotFocus" Grid.Column="0" Name="textbox_playername" Text="Name Here" HorizontalAlignment="Center"  VerticalAlignment="Bottom" BorderBrush="#FF4B365a" FontSize="16" Padding="20,10,20,10" Margin="0,0,0,15" />
 
                     <Label Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Content="Your money:" FontWeight="Bold"  FontSize="16"/>
                     <TextBox IsEnabled="False" Grid.Column="1" Name="textbox_playermoney" Text="Your money" HorizontalAlignment="Center"  VerticalAlignment="Bottom" BorderBrush="#FF4B365a" FontSize="16" Padding="20,10,20,10" Margin="0,0,0,15" />
