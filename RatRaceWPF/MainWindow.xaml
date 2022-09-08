@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RatRaceWPF"
         mc:Ignorable="d"
-        Title="RatRace" Height="1080" Width="1920" WindowState="Maximized" Background="#b8afb6">
+        Title="RatRace" Height="1080" Width="1920" WindowState="Maximized" Background="#b8afb6" Icon="/rotte.png">
     <Grid>
         <StackPanel Background="#4b355a" Height="65" VerticalAlignment="Top">
             <StackPanel.Effect>
@@ -18,7 +18,7 @@
             </Grid>
         </StackPanel>
         <Border BorderBrush="#4b355a" BorderThickness="2" Height="696" Width="791" Background="White" CornerRadius="2" HorizontalAlignment="Left" Margin="133,281,0,0" VerticalAlignment="Top">
-            <Grid ShowGridLines="True">
+            <Grid Name="RaceGrid" ShowGridLines="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -29,10 +29,21 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Name="Lane1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <TextBlock Name="Lane2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Name="Lane3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Name="Lane4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Name="Lane5" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Name="Lane6" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Name="Lane7" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Name="Lane8" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
         </Border>
 
-        <Button Content="START!" HorizontalAlignment="Left" Margin="950,873,0,0" VerticalAlignment="Top" Height="104" Width="324" FontSize="24" FontWeight="Bold" Click="Button_Click_1">
+        <Button Content="START!" Name="ButtonStart" HorizontalAlignment="Left" Margin="950,873,0,0" VerticalAlignment="Top" Height="104" Width="324" FontSize="24" FontWeight="Bold" Click="Button_Click_1">
             <Button.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#4b355a"/>
@@ -49,7 +60,7 @@
                 <StackPanel  Background="#4b355a" Height="45" VerticalAlignment="Top">
                     <Label Content="Next Race" Foreground="#f4dbd1" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
                 </StackPanel>
-                <ListView Name="NextRaceTable" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Height="72" Width="561" Margin="0,0,0,12.5">
+                <ListView Name="NextRaceTable" IsHitTestVisible="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" VerticalAlignment="Bottom" Height="72" Width="561" Margin="0,0,0,12.5">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Race Number" Width="187" DisplayMemberBinding="{Binding RaceNumber}" />
@@ -73,7 +84,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Label Content="Runners" Grid.Column="0" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" />
-                    <ListView Name="RunnersTable" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="0" Height="180" Width="378.28201769911504" Margin="19,68,18,131">
+                    <ListView Name="RunnersTable" IsHitTestVisible="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="0" Height="180" Width="378.28201769911504" Margin="19,68,18,131">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Name" Width="189" DisplayMemberBinding="{Binding Name}" />
@@ -85,7 +96,7 @@
                     <TextBox GotFocus="BetAmount_GotFocus" Name="BetAmount" Text="Amount" Width="180" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="32" Margin="0,0,18,82"/>
 
                     <Label Content="Items" Grid.Column="1" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" />
-                    <ListView Name="ItemsTable" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="1" Height="180" Width="378.28201769911504" Margin="18,68,19,131">
+                    <ListView Name="ItemsTable" IsHitTestVisible="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="1" Height="180" Width="378.28201769911504" Margin="18,68,19,131">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Name" Width="126" DisplayMemberBinding="{Binding ItemName}" />
@@ -119,7 +130,11 @@
                     <Label Content="Placed Bets" Foreground="#f4dbd1" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
                 </StackPanel>
                 <Grid Height="205" VerticalAlignment="Bottom">
-                    <ListView Name="PlacedBetsTable" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="27*"/>
+                        <RowDefinition Height="178*"/>
+                    </Grid.RowDefinitions>
+                    <ListView Name="PlacedBetsTable" IsHitTestVisible="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Player" Width="160" DisplayMemberBinding="{Binding WPlayer}" />
@@ -161,7 +176,29 @@
                 </Button>
             </Grid>
         </Border>
-
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top"  BorderThickness="1" Width="324" Background="White" BorderBrush="Black" Margin="950,725,0,0" Height="101">
+            <Grid>
+                <StackPanel  Background="#4b355a" Height="45" VerticalAlignment="Top">
+                    <Label Content="Winner" Foreground="#f4dbd1" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+                </StackPanel>
+                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Label Name="winnerrat" FontSize="25" />
+                </Grid>
+            </Grid>
+        </Border>
+        <Button Name="ResetButton" Visibility="Hidden" HorizontalAlignment="Left" Margin="950,831,0,0" VerticalAlignment="Top" Height="35" Width="324" Click="ResetButton_Click">
+            <Image Source="/refresh.png" />
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#4b355a"/>
+                    <Setter Property="Foreground" Value="#f4dbd1"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 
 </Window>

@@ -7,9 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="refresh.png" />
+    <None Remove="rotte.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="RatRaceLibary">
       <HintPath>bin\Debug\net5.0-windows\RatRaceLibary.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="refresh.png" />
+    <Resource Include="rotte.png" />
   </ItemGroup>
 
 </Project>
