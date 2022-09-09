@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RatRaceLibary;
 using RatRaceLibary.Items;
+using System.Text.RegularExpressions;
 
 namespace RatRaceWPF
 {
@@ -78,8 +79,8 @@ namespace RatRaceWPF
             tracks.Add(new NextRace { RaceNumber = raceManager.Races[0].RaceID, Tracki = raceManager.Tracks[0].Name, Rats = NumberRats });
             NextRaceTable.ItemsSource = tracks;
 
-            coolItems.Add(new CoolItems { ItemName = "speedyshoes", Boost = "+2 spaces", Price = 200 });
-            coolItems.Add(new CoolItems { ItemName = "Carrot", Boost = "+2 Headstart", Price = 300 });
+            coolItems.Add(new CoolItems { ItemName = "speedyshoes", Boost = "+2 spaces", Price = 300 });
+            coolItems.Add(new CoolItems { ItemName = "Carrot", Boost = "+2 Headstart", Price = 200 });
             coolItems.Add(new CoolItems { ItemName = "Ultimate Dice", Boost = "Higher Rolls", Price = 500 });
             ItemsTable.ItemsSource = coolItems;
             foreach (var Itemss in coolItems)
@@ -143,6 +144,7 @@ namespace RatRaceWPF
             ButtonInfo.IsEnabled = false;
             textbox_playername.IsEnabled = false;
             SubmitButton.IsEnabled = true;
+            ButtonStart.IsEnabled = true;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -151,12 +153,12 @@ namespace RatRaceWPF
             int crntTurn = 1;
             while (!winnerFound)
             {
-
                 for (int i = 0; i < raceManager.Rats.Count; i++)
                 {
                     raceManager.Rats[i].MoveRat(raceManager.Tracks[0]);
                     Grid.SetRow(lanes[i], raceManager.Rats[i].Position);
                 }
+
 
                 int bestPositioneringIHeleDasWelt = 0;
 
@@ -192,6 +194,11 @@ namespace RatRaceWPF
             BettedRat = raceManager.Rats[a];
             int BettedAmount = int.Parse(BetAmount.Text);
 
+            if(BettedAmount > raceManager.Players[0].Money)
+            {
+                BettedAmount = 0;
+            }
+
             int b = SelectItem.SelectedIndex;
             try
             {
@@ -209,6 +216,7 @@ namespace RatRaceWPF
                         break;
                     case "Carrot":
                         carrot.Equip(BettedRat);
+                        Grid.SetRow(lanes[a],raceManager.Rats[a].Position);
                         break;
                     case "Ultimate Dice":
                         ultimateDice.Equip(BettedRat);
@@ -224,7 +232,7 @@ namespace RatRaceWPF
             List<PlaceBets> placeBets = new List<PlaceBets>();
             placeBets.Add(new PlaceBets { WPlayer = PlayerName, WRatName = BettedRat.Name, WAmount = BettedAmount });
             PlacedBetsTable.ItemsSource = placeBets;
-
+            SubmitButton.IsEnabled = false;
         }
 
         private void textbox_playername_GotFocus(object sender, RoutedEventArgs e)
@@ -242,9 +250,12 @@ namespace RatRaceWPF
             for (int i = 0; i < raceManager.Rats.Count; i++)
             {
                 raceManager.Rats[i].ResetRat();
+                lanes[i].Text = null;
                 Grid.SetRow(lanes[i], raceManager.Rats[i].Position);
             }
+
             raceManager.Tracks.Clear();
+            raceManager.Races.Clear();
 
             raceManager.Rats.Clear();
             rats.Clear();
@@ -313,7 +324,7 @@ namespace RatRaceWPF
             {
                 RaceGrid.RowDefinitions.Add(new RowDefinition());
             }
-
+            
             lanes.Add(Lane1);
             lanes.Add(Lane2);
             lanes.Add(Lane3);
@@ -326,8 +337,19 @@ namespace RatRaceWPF
             {
                 lanes[i].Text = rats[i].Name;
             }
+            winnerrat.Content = "";
             ResetButton.Visibility = Visibility.Hidden;
-            ButtonStart.IsEnabled = true;
+            if(raceManager.Players[0].Money > 0)
+            {
+                ButtonStart.IsEnabled = true;
+                SubmitButton.IsEnabled = true;
+            }
+        }
+
+        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

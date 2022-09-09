@@ -43,7 +43,7 @@
             </Grid>
         </Border>
 
-        <Button Content="START!" Name="ButtonStart" HorizontalAlignment="Left" Margin="950,873,0,0" VerticalAlignment="Top" Height="104" Width="324" FontSize="24" FontWeight="Bold" Click="Button_Click_1">
+        <Button Content="START!" IsEnabled="False" Name="ButtonStart" HorizontalAlignment="Left" Margin="950,873,0,0" VerticalAlignment="Top" Height="104" Width="324" FontSize="24" FontWeight="Bold" Click="Button_Click_1">
             <Button.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Background" Value="#4b355a"/>
@@ -93,7 +93,7 @@
                         </ListView.View>
                     </ListView>
                     <ComboBox Name="SelectRat" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="180" Height="32" Margin="18,0,0,82" />
-                    <TextBox GotFocus="BetAmount_GotFocus" Name="BetAmount" Text="Amount" Width="180" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="32" Margin="0,0,18,82"/>
+                    <TextBox GotFocus="BetAmount_GotFocus" PreviewTextInput="PreviewTextInput" Name="BetAmount" Text="Amount" Width="180" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="32" Margin="0,0,18,82"/>
 
                     <Label Content="Items" Grid.Column="1" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" />
                     <ListView Name="ItemsTable" IsHitTestVisible="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Column="1" Height="180" Width="378.28201769911504" Margin="18,68,19,131">
